@@ -1,4 +1,6 @@
-# EStrutura do projeto
+# Estrutura do projeto
+
+## Arquitetura do Projeto
 
 
 
@@ -13,11 +15,11 @@
 
 ## Casos de Uso do Projeto 
 
-![casos de uso](/pics/caso-de-uso.png)
+![casos de uso](/pics/caso-de-uso-2.png)
 
 
 ## Entendo a Estrutura do Projeto 
-GPT
+
 
 Sim, a gravação e leitura dos arquivos JSON são feitas nos modelos (arquivos na pasta models/), mas são controladas e acionadas pelos controladores (arquivos na pasta controllers/). Essa separação segue o padrão MVC (Model-View-Controller), onde:
 
