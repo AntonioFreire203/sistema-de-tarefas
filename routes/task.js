@@ -1,4 +1,5 @@
-const express = require('express');
+const { body } = require('express-validator');
+const validate = require('../middlewares/validateMiddleware');
 const { listTasks, addTask, updateTaskDetails, removeTask } = require('../controllers/taskController');
 const { authenticate } = require('../middlewares/authMiddleware');
 
@@ -34,8 +35,8 @@ const router = express.Router();
  *                     type: string
  *                     example: "12345"
  */
-router.get('/', authenticate, listTasks);
 
+router.get('/', authenticate, listTasks);
 /**
  * @swagger
  * /tasks:
@@ -79,7 +80,15 @@ router.get('/', authenticate, listTasks);
  *       400:
  *         description: Dados inválidos
  */
-router.post('/', authenticate, addTask);
+router.post(
+    '/',
+    authenticate,
+    validate([
+      body('title').notEmpty().withMessage('O campo "title" é obrigatório.'),
+      body('status').optional().isIn(['pending', 'completed']).withMessage('Status inválido.'),
+    ]),
+    addTask
+  );
 
 /**
  * @swagger
@@ -115,7 +124,15 @@ router.post('/', authenticate, addTask);
  *       404:
  *         description: Tarefa não encontrada
  */
-router.put('/:id', authenticate, updateTaskDetails);
+router.put(
+    '/:id',
+    authenticate,
+    validate([
+      body('title').optional().isString().withMessage('O título deve ser uma string.'),
+      body('status').optional().isIn(['pending', 'completed']).withMessage('Status inválido.'),
+    ]),
+    updateTaskDetails
+  );
 
 /**
  * @swagger

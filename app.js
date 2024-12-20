@@ -9,6 +9,15 @@ const errorMiddleware = require('./middlewares/errorMiddleware');
 
 const app = express();
 
+const fs = require('fs');
+const path = require('path');
+
+const logsDir = path.join(__dirname, 'data', 'logs');
+if (!fs.existsSync(logsDir)) {
+  fs.mkdirSync(logsDir, { recursive: true });
+}
+
+
 // Configuração do Swagger
 const swaggerOptions = {
   definition: {
