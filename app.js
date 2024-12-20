@@ -6,12 +6,17 @@ const userRoutes = require('./routes/user');
 const taskRoutes = require('./routes/task');
 //const statsRoutes = require('./routes/stats');
 const errorMiddleware = require('./middlewares/errorMiddleware');
+const installRoutes = require('./routes/install');
+const authRoutes = require('./routes/auth'); 
+
+
 
 const app = express();
 
 const fs = require('fs');
 const path = require('path');
 
+// Configuração de logs
 const logsDir = path.join(__dirname, 'data', 'logs');
 if (!fs.existsSync(logsDir)) {
   fs.mkdirSync(logsDir, { recursive: true });
@@ -41,6 +46,8 @@ app.use(bodyParser.json());
 app.use('/users', userRoutes);
 app.use('/tasks', taskRoutes);
 //app.use('/stats', statsRoutes);
+app.use('/install', installRoutes);
+app.use('/auth', authRoutes);
 
 // Middleware de tratamento de erros
 app.use(errorMiddleware);

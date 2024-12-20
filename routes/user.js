@@ -13,6 +13,9 @@ const { authenticate, authorizeAdmin } = require('../middlewares/authMiddleware'
 
 const router = express.Router();
 
+// Apenas administradores podem listar usuários
+router.get('/', authenticate, authorizeAdmin, listUsers);
+
 /**
  * @swagger
  * /users:

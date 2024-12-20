@@ -1,5 +1,5 @@
 const { v4: uuidv4 } = require('uuid');
-const { getUsers, getUserById, createUser, deleteUser } = require('../models/userModel');
+const { getUsers, getUserById, createUser, deleteUser, updateUser: updateUserInModel } = require('../models/userModel');
 const bcrypt = require('bcryptjs');
 
 // Lista todos os usuários
@@ -55,6 +55,37 @@ const addAdmin = async (req, res) => {
   }
 };
 
+// Atualiza os dados de um usuário
+const updateUser = async (req, res) => {
+  const { id } = req.params;
+  const { username, password } = req.body;
+
+  try {
+    const user = await getUserById(id);
+    if (!user) {
+      return res.status(404).json({ message: 'Usuário não encontrado.' });
+    }
+
+    // Verifica permissões: o usuário só pode atualizar seus próprios dados ou ser admin
+    if (req.user.id !== id && !req.user.isAdmin) {
+      return res.status(403).json({ message: 'Você não tem permissão para alterar este usuário.' });
+    }
+
+    // Atualiza os campos
+    const updatedUser = {
+      ...user,
+      username: username || user.username,
+      password: password ? await bcrypt.hash(password, 10) : user.password,
+    };
+
+    const result = await updateUserInModel(id, updatedUser);
+    res.json({ message: 'Usuário atualizado com sucesso.', result });
+  } catch (error) {
+    console.error('Erro ao atualizar usuário:', error);
+    res.status(500).json({ message: 'Erro ao atualizar usuário.' });
+  }
+};
+
 // Remove um usuário pelo ID
 const removeUser = async (req, res) => {
   const { id } = req.params;
@@ -80,4 +111,4 @@ const removeUser = async (req, res) => {
   }
 };
 
-module.exports = { listUsers, getUser, addUser, addAdmin, removeUser };
+module.exports = { listUsers, getUser, addUser, addAdmin, updateUser, removeUser };

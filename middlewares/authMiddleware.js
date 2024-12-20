@@ -1,5 +1,7 @@
 const jwt = require('jsonwebtoken');
 const { getUserById } = require('../models/userModel');
+const bcrypt = require('bcryptjs');
+const { getUsers } = require('../models/userModel');
 
 // Verificar token e autenticação
 const authenticate = async (req, res, next) => {
@@ -8,7 +10,7 @@ const authenticate = async (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, 'sua-chave-secreta');
-    req.user = decoded; // Adiciona os dados do usuário à requisição
+    req.user = decoded; 
     next();
   } catch (error) {
     res.status(401).json({ message: 'Token inválido.' });

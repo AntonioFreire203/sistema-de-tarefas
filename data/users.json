@@ -1,37 +1,26 @@
 [
   {
-    "id": "d21b95c1-62a4-4809-813f-d72c90cfe48d",
-    "username": "david brito",
-    "password": "senha2424"
+    "id": "610f4303-5a66-41b4-afed-53a7e4084e90",
+    "username": "usuario_exemplo",
+    "password": "$2a$10$CWzGvfgBDeP.wSnuSzqw1OH6VQbb/OZPj86Eye6fBxO.y4T.sUqIK",
+    "isAdmin": false
   },
   {
-    "id": "8509ac67-ac27-4b10-aaee-f010d22483b5",
-    "username": "david brito",
-    "password": "senha2424"
+    "id": "af61fd8b-a600-45bd-b432-e80450c34a8c",
+    "username": "novo_admin",
+    "password": "$2a$10$aV8r75aFwPci3OGFYjwzeOTT8wzv6h/0pPl7ZDMHe4mKRYlGPAVe2",
+    "isAdmin": false
   },
   {
-    "id": "dea2cfdc-b98d-48ac-9659-6d30953e978d",
-    "username": "bruno freire",
-    "password": "zedamanga"
+    "id": "admin-id",
+    "username": "admin",
+    "password": "$2a$10$Syt2xuU/sxOTbxQZgQPQ/eIzF3BB8DPnFHDYjo5FvYZ3Y.0LSbu3S",
+    "isAdmin": true
   },
   {
-    "id": "e5d69a5a-b754-4147-aa74-6c8691b9c74d",
-    "username": "Gleison manaus",
-    "password": "2424jogodotigrinho"
-  },
-  {
-    "id": "02b2b155-905a-4c90-90ee-bd10ee741ecb",
-    "username": "Gleison manaus",
-    "password": "2424jogodotigrinho"
-  },
-  {
-    "id": "56480bf7-8ba5-482b-a159-9bcd2ab973d2",
-    "username": "gabriel",
-    "password": "12345"
-  },
-  {
-    "id": "114ee618-2a94-46d0-a0fc-a5e75575cb6a",
-    "username": "gabriel",
-    "password": "12345"
+    "id": "192d358f-610c-4069-aa5d-2f43dada9686",
+    "username": "novo_admin",
+    "password": "$2a$10$WJo5IZR1.pYgD1QzjBLklO4KJygJb5Q5vaTrT0L2Xsw41wsMowI6S",
+    "isAdmin": true
   }
 ]
