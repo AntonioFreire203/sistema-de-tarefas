@@ -10,12 +10,12 @@ const validate = (validations) => {
       return res.status(400).json({ errors: errors.array() });
     }
 
-    // Passa para o próximo middleware ou controlador
+    //  próximo middleware 
     next();
   };
 };
 
-// Validação de status permitido
+// Validação de status
 const validateStatus = (allowedStatuses) => {
   return (req, res, next) => {
     const { status } = req.body;

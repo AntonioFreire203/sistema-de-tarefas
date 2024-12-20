@@ -1,6 +1,8 @@
 const express = require('express');
 const { body, param } = require('express-validator');
-const validate = require('../middlewares/validateMiddleware');
+//const validate = require('../middlewares/validateMiddleware');
+const { validate } = require('../middlewares/validateMiddleware');
+
 const { 
   listUsers, 
   getUser, 

@@ -1,5 +1,6 @@
 const { v4: uuidv4 } = require('uuid');
-const { getTasks, getTasksByUser, createTask, updateTask, deleteTask } = require('../models/taskModel');
+const { getTasks, getTasksByUser, getTaskById, createTask, updateTask, deleteTask } = require('../models/taskModel');
+
 
 // Listar tarefas
 const listTasks = async (req, res) => {
@@ -46,6 +47,7 @@ const addTask = async (req, res) => {
   }
 };
 
+// Atualizar detalhes de uma tarefa
 const updateTaskDetails = async (req, res) => {
   try {
     const task = await getTaskById(req.params.id);
@@ -54,7 +56,7 @@ const updateTaskDetails = async (req, res) => {
       return res.status(404).json({ message: 'Tarefa não encontrada.' });
     }
 
-    // Verifica se o administrador que criou a tarefa está fazendo a alteração
+    // Verifica se o usuário é o administrador responsável pela tarefa
     if (task.adminId !== req.user.id) {
       return res.status(403).json({ message: 'Você não tem permissão para alterar esta tarefa.' });
     }
@@ -66,6 +68,7 @@ const updateTaskDetails = async (req, res) => {
     res.status(500).json({ message: 'Erro ao atualizar tarefa.' });
   }
 };
+
 
 
 
@@ -122,4 +125,4 @@ const updateTaskStatus = async (req, res) => {
 
 
 
-module.exports = { listTasks, addTask, updateTaskDetails, updateTaskStatus, removeTask };
+module.exports = { listTasks,getTaskById ,addTask, updateTaskDetails, updateTaskStatus, removeTask };

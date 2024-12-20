@@ -1,6 +1,12 @@
 const { readData, writeData } = require('../utils/fileManager');
 const fileName = 'tasks.json';
 
+// Obtém uma tarefa pelo ID
+const getTaskById = async (id) => {
+  const tasks = await getTasks(); // Utiliza getTasks para buscar todas as tarefas
+  return tasks.find((task) => task.id === id); // Filtra pelo ID
+};
+
 // Lê todas as tarefas
 const getTasks = async () => await readData(fileName);
 
@@ -35,4 +41,4 @@ const deleteTask = async (id) => {
   return filteredTasks.length < tasks.length;
 };
 
-module.exports = { getTasks, getTasksByUser, createTask, updateTask, deleteTask };
+module.exports = { getTasks, getTasksByUser, createTask, updateTask, deleteTask,getTaskById };
