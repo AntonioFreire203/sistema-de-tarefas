@@ -1,22 +1,33 @@
 const { readData, writeData } = require('../utils/fileManager');
 const fileName = 'tasks.json';
 
+// Lê todas as tarefas
 const getTasks = async () => await readData(fileName);
-const getTasksByUser = async (userId) => (await getTasks()).filter((task) => task.userId === userId);
+
+// Obtém tarefas associadas a um usuário
+const getTasksByUser = async (userId) => (await getTasks()).filter((task) => task.userIds?.includes(userId));
+
+// Cria uma nova tarefa
 const createTask = async (task) => {
   const tasks = await getTasks();
   tasks.push(task);
   await writeData(fileName, tasks);
   return task;
 };
-const updateTask = async (id, newData) => {
+
+// Atualiza uma tarefa existente
+const updateTask = async (id, updatedData) => {
   const tasks = await getTasks();
   const index = tasks.findIndex((task) => task.id === id);
   if (index === -1) return null;
-  tasks[index] = { ...tasks[index], ...newData };
+
+  const updatedTask = { ...tasks[index], ...updatedData };
+  tasks[index] = updatedTask;
   await writeData(fileName, tasks);
-  return tasks[index];
+  return updatedTask;
 };
+
+// Exclui uma tarefa
 const deleteTask = async (id) => {
   const tasks = await getTasks();
   const filteredTasks = tasks.filter((task) => task.id !== id);
