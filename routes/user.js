@@ -18,11 +18,13 @@ const router = express.Router();
 // Apenas administradores podem listar usuários
 router.get('/', authenticate, authorizeAdmin, listUsers);
 
+
 /**
  * @swagger
  * /users:
  *   get:
  *     summary: Lista todos os usuários
+ *     tags: [Usuários]
  *     security:
  *       - bearerAuth: [] # Requer token JWT
  *     responses:
@@ -55,6 +57,7 @@ router.get('/', authenticate, authorizeAdmin, listUsers);
  * /users/{id}:
  *   get:
  *     summary: Obter detalhes de um usuário
+ *     tags: [Usuários]
  *     security:
  *       - bearerAuth: [] # Requer token JWT
  *     parameters:
@@ -100,6 +103,7 @@ router.get(
  * /users:
  *   post:
  *     summary: Criar um novo usuário
+ *     tags: [Usuários]
  *     requestBody:
  *       required: true
  *       content:
@@ -157,6 +161,7 @@ router.post(
  * /users/{id}:
  *   put:
  *     summary: Atualizar dados de um usuário
+ *     tags: [Usuários]
  *     security:
  *       - bearerAuth: [] # Requer token JWT
  *     parameters:
@@ -213,6 +218,7 @@ router.put(
  * /users/{id}:
  *   delete:
  *     summary: Remover um usuário
+ *     tags: [Usuários]
  *     security:
  *       - bearerAuth: [] # Requer token JWT
  *     parameters:
@@ -247,6 +253,7 @@ router.delete(
  * /users/admin:
  *   post:
  *     summary: Criar um novo administrador
+ *     tags: [Usuários]
  *     security:
  *       - bearerAuth: [] # Requer token JWT
  *     requestBody:

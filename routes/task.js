@@ -1,51 +1,30 @@
 const express = require('express');
 const { body, param } = require('express-validator');
 const { validate } = require('../middlewares/validateMiddleware');
-const { 
-  listTasks, 
-  addTask, 
-  updateTaskDetails, 
-  removeTask, 
-  updateTaskStatus 
-} = require('../controllers/taskController');
+const {listTasks, addTask, updateTaskDetails,removeTask,updateTaskStatus,assignUsersToTask} = require('../controllers/taskController');
 const { authenticate } = require('../middlewares/authMiddleware');
 
 const router = express.Router();
 
 /**
  * @swagger
+ * tags:
+ *   name: Tarefas
+ *   description: Rotas relacionadas às tarefas
+ */
+
+
+/**
+ * @swagger
  * /tasks:
  *   get:
  *     summary: Lista todas as tarefas
+ *     tags: [Tarefas]
  *     security:
  *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: Lista de tarefas
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 type: object
- *                 properties:
- *                   id:
- *                     type: string
- *                     example: "1"
- *                   title:
- *                     type: string
- *                     example: "Nova tarefa"
- *                   status:
- *                     type: string
- *                     example: "Em andamento"
- *                   adminId:
- *                     type: string
- *                     example: "admin-id"
- *                   userIds:
- *                     type: array
- *                     items:
- *                       type: string
- *                       example: "user-id"
  */
 router.get('/', authenticate, listTasks);
 
@@ -54,6 +33,7 @@ router.get('/', authenticate, listTasks);
  * /tasks:
  *   post:
  *     summary: Cria uma nova tarefa (somente para administradores)
+ *     tags: [Tarefas]
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -70,12 +50,9 @@ router.get('/', authenticate, listTasks);
  *                 type: array
  *                 items:
  *                   type: string
- *                   example: "user-id"
  *     responses:
  *       201:
  *         description: Tarefa criada com sucesso
- *       400:
- *         description: Dados inválidos
  */
 router.post(
   '/',
@@ -92,6 +69,7 @@ router.post(
  * /tasks/{id}:
  *   put:
  *     summary: Atualiza os detalhes de uma tarefa (somente administradores)
+ *     tags: [Tarefas]  
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -99,9 +77,6 @@ router.post(
  *         in: path
  *         required: true
  *         description: ID da tarefa
- *         schema:
- *           type: string
- *           example: "1"
  *     requestBody:
  *       required: true
  *       content:
@@ -111,19 +86,15 @@ router.post(
  *             properties:
  *               title:
  *                 type: string
- *                 example: "Tarefa Atualizada"
  *     responses:
  *       200:
  *         description: Tarefa atualizada com sucesso
- *       403:
- *         description: Permissão negada
- *       404:
- *         description: Tarefa não encontrada
  */
 router.put(
   '/:id',
   authenticate,
   validate([
+    param('id').isUUID().withMessage('O ID fornecido não é válido.'),
     body('title').optional().isString().withMessage('O campo "title" deve ser uma string.'),
   ]),
   updateTaskDetails
@@ -134,6 +105,7 @@ router.put(
  * /tasks/{id}/status:
  *   patch:
  *     summary: Atualiza o status de uma tarefa (somente usuários atribuídos)
+ *     tags: [Tarefas]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -141,9 +113,6 @@ router.put(
  *         in: path
  *         required: true
  *         description: ID da tarefa
- *         schema:
- *           type: string
- *           example: "1"
  *     requestBody:
  *       required: true
  *       content:
@@ -157,12 +126,7 @@ router.put(
  *     responses:
  *       200:
  *         description: Status atualizado com sucesso
- *       403:
- *         description: Permissão negada
- *       404:
- *         description: Tarefa não encontrada
  */
-/*
 router.patch(
   '/:id/status',
   authenticate,
@@ -174,32 +138,13 @@ router.patch(
   ]),
   updateTaskStatus
 );
-
-
-*/
-router.patch(
-  '/:id/status',
-  authenticate,
-  validate([
-    param('id').isUUID().withMessage('O ID fornecido não é válido.'),
-    body('status')
-      .notEmpty().withMessage('O campo "status" é obrigatório.')
-      .isIn(['Em andamento', 'Pausada', 'Concluída']).withMessage('Status inválido.'),
-  ]),
-  (req, res, next) => {
-    console.log(`[DEBUG] Chegou na rota PATCH /tasks/${req.params.id}/status`);
-    next();
-  },
-  updateTaskStatus
-);
-
-
 
 /**
  * @swagger
- * /tasks/{id}:
- *   delete:
- *     summary: Remove uma tarefa (somente administradores)
+ * /tasks/{id}/assign:
+ *   patch:
+ *     summary: Vincula usuários a uma tarefa (somente administradores)
+ *     tags: [Tarefas]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -207,17 +152,50 @@ router.patch(
  *         in: path
  *         required: true
  *         description: ID da tarefa
- *         schema:
- *           type: string
- *           example: "1"
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               userIds:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *     responses:
+ *       200:
+ *         description: Usuários vinculados com sucesso
+ */
+router.patch(
+  '/:id/assign',
+  authenticate,
+  validate([
+    param('id').isUUID().withMessage('O ID fornecido não é válido.'),
+    body('userIds')
+      .notEmpty().withMessage('O campo "userIds" é obrigatório.')
+      .isArray().withMessage('O campo "userIds" deve ser um array de IDs de usuários.'),
+  ]),
+  assignUsersToTask
+);
+
+/**
+ * @swagger
+ * /tasks/{id}:
+ *   delete:
+ *     summary: Remove uma tarefa (somente administradores)
+ *     tags: [Tarefas]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: ID da tarefa
  *     responses:
  *       200:
  *         description: Tarefa removida com sucesso
- *       403:
- *         description: Permissão negada
- *       404:
- *         description: Tarefa não encontrada
  */
-router.delete('/:id', authenticate, removeTask);
+router.delete('/:id', authenticate, validate([param('id').isUUID().withMessage('O ID fornecido não é válido.')]), removeTask);
 
 module.exports = router;

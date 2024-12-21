@@ -23,7 +23,6 @@ if (!fs.existsSync(logsDir)) {
 }
 
 
-// Configuração do Swagger
 const swaggerOptions = {
   definition: {
     openapi: '3.0.0',
@@ -32,8 +31,13 @@ const swaggerOptions = {
       version: '1.0.0',
       description: 'API de exemplo documentada com Swagger',
     },
+    tags: [
+      { name: 'Autenticação', description: 'Rotas relacionadas à autenticação' },
+      { name: 'Tarefas', description: 'Rotas relacionadas às tarefas' },
+      { name: 'Usuários', description: 'Rotas relacionadas aos usuários' },
+    ],
   },
-  apis: ['./routes/*.js'], // Caminho para as rotas documentadas com JSDoc
+  apis: ['./routes/*.js'], 
 };
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);

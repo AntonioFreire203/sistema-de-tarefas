@@ -1,26 +1,26 @@
 [
   {
-    "id": "610f4303-5a66-41b4-afed-53a7e4084e90",
-    "username": "usuario_exemplo",
-    "password": "$2a$10$CWzGvfgBDeP.wSnuSzqw1OH6VQbb/OZPj86Eye6fBxO.y4T.sUqIK",
-    "isAdmin": false
-  },
-  {
-    "id": "af61fd8b-a600-45bd-b432-e80450c34a8c",
-    "username": "novo_admin",
-    "password": "$2a$10$aV8r75aFwPci3OGFYjwzeOTT8wzv6h/0pPl7ZDMHe4mKRYlGPAVe2",
-    "isAdmin": false
-  },
-  {
-    "id": "admin-id",
+    "id": "0e5b0db5-ca91-472d-81cc-51d1c6e2bfe4",
     "username": "admin",
-    "password": "$2a$10$Syt2xuU/sxOTbxQZgQPQ/eIzF3BB8DPnFHDYjo5FvYZ3Y.0LSbu3S",
-    "isAdmin": true
+    "password": "$2a$10$v.jAnQtpV7ioiIw6uHSMzOoYAQOnWD41/ZQgwYhHNrDfvzTFet57G",
+    "isAdmin": true,
+    "role": "Sem cargo",
+    "team": "Sem equipe"
   },
   {
-    "id": "192d358f-610c-4069-aa5d-2f43dada9686",
-    "username": "novo_admin",
-    "password": "$2a$10$WJo5IZR1.pYgD1QzjBLklO4KJygJb5Q5vaTrT0L2Xsw41wsMowI6S",
-    "isAdmin": true
+    "id": "f94ee92f-4c74-4243-8e77-5a977879a1ab",
+    "username": "antonio_utf",
+    "password": "$2a$10$zI0IP6aYXmYfw.RqSB2HX.K24BgJyKhmb1HHHHecV7j/sjTIwFa9a",
+    "isAdmin": false,
+    "role": "Engenheiro de Ml",
+    "team": "Time de Desenvolvimento"
+  },
+  {
+    "id": "02965f0c-4ba5-4d36-86d6-73828e319fda",
+    "username": "jp_utf",
+    "password": "$2a$10$TICqLl.FaEn9EoTOfe9kDe7pOsdt.ihHhYK3QTSwjzKotvYtcTIIm",
+    "isAdmin": false,
+    "role": "Sem cargo",
+    "team": "Sem equipe"
   }
 ]

@@ -39,7 +39,12 @@ const getUserByUsername = async (username) => {
 const createUser = async (user) => {
   try {
     const users = await getUsers();
-    users.push(user);
+    // Adiciona o novo usuário com campos padrão se não fornecidos
+    users.push({
+      ...user,
+      role: user.role || 'Sem cargo', 
+      team: user.team || 'Sem equipe', 
+    });
     await writeData(fileName, users);
     return user;
   } catch (error) {
@@ -69,7 +74,13 @@ const updateUser = async (id, updatedData) => {
     const index = users.findIndex((user) => user.id === id);
     if (index === -1) return null;
 
-    const updatedUser = { ...users[index], ...updatedData };
+    const updatedUser = {
+      ...users[index],
+      ...updatedData, // Atualiza os dados fornecidos
+      role: updatedData.role || users[index].role, // Mantém o cargo atual se não for fornecido
+      team: updatedData.team || users[index].team, // Mantém a equipe atual se não for fornecida
+    };
+
     users[index] = updatedUser;
     await writeData(fileName, users);
     return updatedUser;
