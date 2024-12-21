@@ -4,7 +4,6 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerJsDoc = require('swagger-jsdoc');
 const userRoutes = require('./routes/user');
 const taskRoutes = require('./routes/task');
-//const statsRoutes = require('./routes/stats');
 const errorMiddleware = require('./middlewares/errorMiddleware');
 const installRoutes = require('./routes/install');
 const authRoutes = require('./routes/auth'); 
@@ -49,7 +48,6 @@ app.use(bodyParser.json());
 // Rotas
 app.use('/users', userRoutes);
 app.use('/tasks', taskRoutes);
-//app.use('/stats', statsRoutes);
 app.use('/install', installRoutes);
 app.use('/auth', authRoutes);
 

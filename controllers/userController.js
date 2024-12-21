@@ -63,8 +63,8 @@ const addUser = async (req, res) => {
       username,
       password: hashedPassword,
       isAdmin: false,
-      role: role || 'Sem cargo', // Default se não for enviado
-      team: team || 'Sem equipe', // Default se não for enviado
+      role: role || 'Sem cargo', 
+      team: team || 'Sem equipe', 
     };
 
     const createdUser = await createUser(newUser);
@@ -115,12 +115,12 @@ const updateUser = async (req, res) => {
     const updatedData = {
       username: username || user.username,
       password: password ? await bcrypt.hash(password, 10) : user.password,
-      role: role || user.role, // Atualiza cargo, se fornecido
-      team: team || user.team, // Atualiza equipe, se fornecida
+      role: role || user.role, 
+      team: team || user.team, 
     };
 
     const updatedUser = await updateUserInModel(id, updatedData);
-    const { password: _, ...responseUser } = updatedUser; // Não retornar a senha
+    const { password: _, ...responseUser } = updatedUser; 
     res.json({ message: 'Usuário atualizado com sucesso.', user: responseUser });
   } catch (error) {
     console.error('Erro ao atualizar usuário:', error);

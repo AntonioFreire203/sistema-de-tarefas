@@ -15,7 +15,7 @@
 
 ## Casos de Uso do Projeto 
 
-![casos de uso](/pics/caso-de-uso-2.png)
+![casos de uso](/pics/caso-de-uso-4.png)
 
 
 ## Entendo a Estrutura do Projeto 
