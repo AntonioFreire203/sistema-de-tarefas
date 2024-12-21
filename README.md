@@ -1,30 +1,63 @@
 # Estrutura do projeto
 
-## Arquitetura do Projeto
+## Descrição do Projeto
 
+Este projeto é um sistema de gerenciamento de tarefas desenvolvido em Node.js, que permite aos administradores gerenciar tarefas e usuários, enquanto os usuários comuns podem visualizar suas tarefas atribuídas e atualizar seus status. O sistema utiliza autenticação JWT e inclui funcionalidades de CRUD para usuários e tarefas.
 
+## Link do Repositorio
+https://github.com/AntonioFreire203/sistema-de-tarefas
 
-## Comandos Para Rodar o Projeto
+## Principais Funcionalidades   
 
-1-npm init -y
+### Usuário Administrador
 
-2-npm install express body-parser jsonwebtoken bcryptjs uuid swagger-ui-express fs-extra
+   1-riar, atualizar e excluir usuários.
+   2-riar, atualizar e excluir tarefas.
+   3-tribuir usuários às tarefas.
+   4-onsultar usuários atribuídos a uma tarefa.
+   5-Listar as tarefas que criou 
 
-3-npm install --save-dev nodemon
+### Usuário Regular
 
+   1-onsultar tarefas atribuídas.
+   2-tualizar o status das tarefas atribuídas.
+
+Rotas Disponíveis
+Autenticação
+
+    POST /auth/login - Autenticar um usuário.
+
+Usuários
+
+    GET /users - Listar todos os usuários (somente admin).
+
+    GET /users/:id - Obter detalhes de um usuário (somente admin).
+
+    POST /users - Criar um novo usuário (somente admin).
+
+    POST /users/admin - Criar um novo administrador (somente admin).
+
+    PUT /users/:id - Atualizar os dados de um usuário (autorizado ou admin).
+
+    DELETE /users/:id - Excluir um usuário (somente admin).
+
+Tarefas
+
+    GET /tasks - Listar tarefas.
+
+    POST /tasks - Criar uma nova tarefa (somente admin).
+
+    PUT /tasks/:id - Atualizar os detalhes de uma tarefa (somente admin).
+
+    DELETE /tasks/:id - Excluir uma tarefa (somente admin).
+
+    PATCH /tasks/:id/status - Atualizar o status de uma tarefa (usuários 
+    atribuídos).
+
+    PATCH /tasks/:id/assign - Atribuir usuários a uma tarefa (somente admin).
 
 ## Casos de Uso do Projeto 
 
 ![casos de uso](/pics/caso-de-uso-4.png)
 
 
-## Entendo a Estrutura do Projeto 
-
-
-Sim, a gravação e leitura dos arquivos JSON são feitas nos modelos (arquivos na pasta models/), mas são controladas e acionadas pelos controladores (arquivos na pasta controllers/). Essa separação segue o padrão MVC (Model-View-Controller), onde:
-
-    Modelos (models/): Contêm a lógica para acessar e manipular os dados nos arquivos JSON (leitura e escrita).
-
-    Controladores (controllers/): Chamam as funções dos modelos e decidem como manipular os dados com base nas requisições HTTP.
-    
-    Rotas (routes/): Definem os endpoints e conectam as requisições HTTP aos controladores.
